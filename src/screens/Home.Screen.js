@@ -1,16 +1,31 @@
-import React, { useContext, Text } from "react";
+import React, { useContext, useLayoutEffect } from "react";
 import {
   View,
   FlatList,
   StyleSheet,
   StatusBar,
   ActivityIndicator,
+  Text,
+  TouchableOpacity,
 } from "react-native";
 import Record from "../components/Record";
 import { RecordContext } from "../services/record/record.service";
+import { AuthCOntext } from "../services/auth/auth.service";
 
 const HomeScreen = ({ navigation }) => {
   const { isFetching, error, records } = useContext(RecordContext);
+  const { setUser } = useContext(AuthCOntext);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity activeOpacity={0.7} onPress={() => setUser(null)}>
+          <Text style={styles.logout}>Log Out</Text>
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation, setUser]);
+
   return (
     <View style={styles.root}>
       <StatusBar barStyle="light-content" backgroundColor="#1E319D" />
@@ -45,6 +60,11 @@ const styles = StyleSheet.create({
   },
   loader: {
     marginTop: 70,
+  },
+  logout: {
+    color: "#FFFFFF",
+    fontFamily: "Lato_700Bold",
+    fontSize: 15,
   },
 });
 

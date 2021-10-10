@@ -8,14 +8,15 @@ const AuthProvider = (props) => {
   const [isLoginIn, setIsLoginIn] = useState(false);
   const [error, setError] = useState(null);
 
-  const signInFn = async () => {
+  const signInFn = async (email, password) => {
     try {
       setIsLoginIn(true);
+      setError(null);
       const { data } = await axios.post(
         "https://powerful-stream-15446.herokuapp.com/api/admin/login",
         {
-          email: "tobi@gmail.com",
-          password: "password",
+          email,
+          password,
         }
       );
       setUser(data.success.token);
@@ -27,7 +28,7 @@ const AuthProvider = (props) => {
   };
 
   return (
-    <AuthCOntext.Provider value={{ user, isLoginIn, signInFn, error }}>
+    <AuthCOntext.Provider value={{ user, isLoginIn, signInFn, error, setUser }}>
       {props.children}
     </AuthCOntext.Provider>
   );

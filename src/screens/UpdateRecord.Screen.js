@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useLayoutEffect } from "react";
 import {
   View,
   Text,
@@ -22,7 +22,7 @@ const isAndroid = Platform.OS === "android";
 
 const UpdateRecord = ({ route, navigation }) => {
   const [checked, setChecked] = useState(route.params.record.marital_status);
-  const { user } = useContext(AuthCOntext);
+  const { user, setUser } = useContext(AuthCOntext);
   const { updateRecord } = useContext(RecordContext);
   const [isUpdating, setIsUpdating] = useState(false);
 
@@ -99,6 +99,16 @@ const UpdateRecord = ({ route, navigation }) => {
       console.log(e.response);
     }
   };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity activeOpacity={0.7} onPress={() => setUser(null)}>
+          <Text style={styles.logout}>Log Out</Text>
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation, setUser]);
 
   return (
     <View style={styles.root}>
@@ -345,6 +355,11 @@ const styles = StyleSheet.create({
     fontFamily: "Lato_700Bold",
     fontSize: 16,
     color: "#818181",
+  },
+  logout: {
+    color: "#FFFFFF",
+    fontFamily: "Lato_700Bold",
+    fontSize: 15,
   },
 });
 

@@ -15,14 +15,15 @@ import { AuthCOntext } from "../services/auth/auth.service";
 
 const Login = () => {
   let passwordRef;
-
-  const [email, setEmail] = useState("tobi@gmail.com");
-  const [password, setPassword] = useState("password");
-  const { signInFn, isLoginIn } = useContext(AuthCOntext);
+  // tobi@gmail.com
+  // password
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { signInFn, isLoginIn, error } = useContext(AuthCOntext);
 
   const signIn = () => {
     Keyboard.dismiss();
-    signInFn();
+    signInFn(email, password);
   };
 
   return (
@@ -71,6 +72,9 @@ const Login = () => {
               onChangeText={setPassword}
               onSubmitEditing={signIn}
             />
+            <View style={styles.errorBox}>
+              {error && <Text style={styles.errorText}>An Error occurred</Text>}
+            </View>
             <TouchableOpacity
               style={styles.btn}
               activeOpacity={0.9}
@@ -133,6 +137,14 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontFamily: "Lato_700Bold",
     fontSize: 20,
+  },
+  errorBox: {
+    minHeight: 30,
+  },
+  errorText: {
+    color: "red",
+    fontSize: 15,
+    fontFamily: "Lato_700Bold",
   },
 });
 
