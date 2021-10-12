@@ -15,8 +15,6 @@ import { AuthCOntext } from "../services/auth/auth.service";
 
 const Login = () => {
   let passwordRef;
-  // tobi@gmail.com
-  // password
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { signInFn, isLoginIn, error } = useContext(AuthCOntext);
@@ -28,7 +26,7 @@ const Login = () => {
 
   return (
     <SafeAreaView style={styles.root}>
-      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
+      <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
       <TouchableOpacity
         activeOpacity={1}
         onPress={Keyboard.dismiss}
